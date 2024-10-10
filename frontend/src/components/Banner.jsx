@@ -4,8 +4,8 @@ import item1 from "/homePage/item1.png";
 
 const Banner = () => {
   return (
-    <div className="section-container bg-gradient-to-r from-white from-0% to-lightGrey to-80% min-h-screen flex justify-center items-center">
-      <div className=" flex py-24 flex-col-reverse md:flex-row items-center justify-between gap-8 ">
+    <div className="mx-auto xl:px-24 px-4 bg-gradient-to-r from-white from-0% to-lightGrey to-100% min-h-screen flex justify-center items-center">
+      <div className=" flex py-24 flex-col-reverse md:flex-row items-center justify-between gap-8 max-w-screen-2xl">
         {/* texts */}
         <div className=" md:w-1/2 space-y-6 px-4">
           <h2 className=" md:text-5xl text-4xl font-semibold md:leading-snug leading-snug">

@@ -68,9 +68,9 @@ const Navbar = () => {
   );
 
   return (
-    <header className="max-w-screen-2xl container mx-auto fixed top-0 right-0 left-0 transition-all duration-300 ease-in-out z-40 ">
+    <header className="max-w-screen-2xl container mx-auto fixed top-0 right-0 left-0 transition-all duration-300 ease-in-out z-100 ">
       <div
-        className={`navbar xl:px-24 ${
+        className={`navbar rounded-full xl:px-24 ${
           isSticky
             ? "shadow-md bg-base-100 transition-all duration-300 ease-in-out"
             : ""
@@ -123,7 +123,7 @@ const Navbar = () => {
         </div>
 
         {/* Right side buttons */}
-        <div className="navbar-end items-center justify-center gap-2">
+        <div className="navbar-end items-center justify-end gap-2">
           {/* Search */}
           <button className="btn btn-ghost btn-circle hidden lg:flex">
             <svg
@@ -168,7 +168,7 @@ const Navbar = () => {
           </div>
 
           {/* Contact */}
-          <a className="btn rounded-full px-6 bg-darkGrey text-white">
+          <a className="btn rounded-full px-6 mr-4 bg-darkGrey text-white">
             <FiPhoneCall /> Contact
           </a>
         </div>

@@ -1,0 +1,66 @@
+[
+    {
+        "_id": 1,
+        "name": "Aluminum Frying Pan",
+        "description": "Durable aluminum frying pan with non-stick coating, ideal for everyday cooking.",
+        "price": 25.99,
+        "category": "Pans",
+        "image": "/homePage/productImages/item1.png"
+    },
+    {
+        "_id": 2,
+        "name": "Aluminum Saucepan",
+        "description": "High-quality aluminum saucepan for boiling  with a heat-resistant handle.",
+        "price": 19.99,
+        "category": "Pans",
+        "image": "/homePage/productImages/item1.png"
+    },
+    {
+        "_id": 3,
+        "name": "Aluminum Stockpot",
+        "description": "Large capacity aluminum stockpot, perfect for making soups and stews.",
+        "price": 34.99,
+        "category": "Pots",
+        "image": "/homePage/productImages/item1.png"
+    },
+    {
+        "_id": 4,
+        "name": "Aluminum Baking Sheet",
+        "description": "Sturdy aluminum baking sheet for even heat distribution and perfect baking results.",
+        "price": 15.99,
+        "category": "Bakeware",
+        "image": "/homePage/productImages/item1.png"
+    },
+    {
+        "_id": 5,
+        "name": "Aluminum Roasting Pan",
+        "description": "Heavy-duty aluminum roasting pan with a rack for roasting meats and vegetables.",
+        "price": 29.99,
+        "category": "Pans",
+        "image": "/homePage/productImages/item1.png"
+    },
+    {
+        "_id": 6,
+        "name": "Aluminum Pressure Cooker",
+        "description": "Fast and efficient aluminum pressure cooker with a safety release valve.",
+        "price": 49.99,
+        "category": "Cookers",
+        "image": "/homePage/productImages/item1.png"
+    },
+    {
+        "_id": 7,
+        "name": "Aluminum Casserole Dish",
+        "description": "Versatile aluminum casserole dish with a lid, suitable for oven and stovetop cooking.",
+        "price": 39.99,
+        "category": "Pots",
+        "image": "/homePage/productImages/item1.png"
+    },
+    {
+        "_id": 8,
+        "name": "Aluminum Wok",
+        "description": "Lightweight aluminum wok for stir-frying and sautéing, with ergonomic handles.",
+        "price": 27.99,
+        "category": "Pans",
+        "image": "/homePage/productImages/item1.png"
+    }
+]
