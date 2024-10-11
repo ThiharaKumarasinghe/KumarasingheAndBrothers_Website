@@ -22,6 +22,8 @@ const Navbar = () => {
       window.addEventListener("scroll", handleScroll);
     };
   }, []);
+
+  // Nav bar items
   const navItems = (
     <>
       <li>
@@ -32,7 +34,7 @@ const Navbar = () => {
           <summary>Products</summary>
           <ul className="p-2">
             <li>
-              <a href="#submenu1">All</a>
+              <a href="/products">All</a>
             </li>
             <li>
               <a href="#submenu2">Aluminium</a>
@@ -68,7 +70,7 @@ const Navbar = () => {
   );
 
   return (
-    <header className="max-w-screen-2xl container mx-auto fixed top-0 right-0 left-0 transition-all duration-300 ease-in-out z-100 ">
+    <header className="max-w-screen-2xl container mx-auto fixed top-0 right-0 left-0 transition-all duration-300 ease-in-out z-50 ">
       <div
         className={`navbar rounded-full xl:px-24 ${
           isSticky
