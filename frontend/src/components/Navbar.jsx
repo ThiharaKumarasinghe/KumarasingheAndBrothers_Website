@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import logo from "/webLogo_2.png";
 import mobilelogo from "/webLogo.png";
-import { FiPhoneCall } from "react-icons/fi";
+import { FaUser } from "react-icons/fa";
+import ModelLogin from "./ModelLogin";
 
 const Navbar = () => {
   const [isSticky, setSticky] = useState(false);
@@ -169,10 +170,16 @@ const Navbar = () => {
             </div>
           </div>
 
-          {/* Contact */}
-          <a className="btn rounded-full px-6 mr-4 bg-darkGrey text-white">
-            <FiPhoneCall /> Contact
-          </a>
+          {/* Button */}
+          <button
+            onClick={() => document.getElementById("loginModel").showModal()}
+            className="btn rounded-full px-6 mr-4 bg-darkGrey text-white"
+          >
+            <FaUser /> Login
+          </button>
+
+          {/* Login model */}
+          <ModelLogin/>
         </div>
       </div>
     </header>
