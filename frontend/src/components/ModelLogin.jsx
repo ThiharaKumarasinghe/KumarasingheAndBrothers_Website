@@ -1,19 +1,60 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useContext, useState } from "react";
+import { Link, Navigate, useLocation, useNavigation } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
-import { FaSquareFacebook } from "react-icons/fa6";
-import { FaApple } from "react-icons/fa6";
-import { useForm } from "react-hook-form"
+import { FaSquareFacebook, FaApple } from "react-icons/fa6";
+import { useForm } from "react-hook-form";
+import { AuthContext } from "../contexts/AuthProvider";
 
 const ModelLogin = () => {
-    const {
-        register,
-        handleSubmit,
-        watch,
-        formState: { errors },
-      } = useForm()
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
-      const onSubmit = (data) => console.log(data)
+  // useContext
+  const { signupWithGmail, user, loginWithEmailAndPaswword } = useContext(AuthContext);
+
+  const [errorMessage, setErrorMessage] = useState("")
+
+  // to redirection to home page
+  const location = useLocation();
+  const navigation = useNavigation();
+  const from = location.state?.from?.pathname || "/";
+
+
+  // Handle Google Sign-In
+  const handleLogin = () => {
+    signupWithGmail()
+      .then((result) => {
+        // The signed-in user info
+        const user = result.user;
+        alert("Login successful!");
+        document.getElementById("loginModel").close()
+        navigation(from, {replace: true})
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
+  };
+
+  const onSubmit = (data) => {
+    const email = data.email;
+    const password = data.password;
+
+    loginWithEmailAndPaswword(email, password)
+      .then((result) => {
+        // Signed up
+        const user = result.user;
+        alert("Login successful!");
+        document.getElementById("loginModel").close()
+        navigation(from, {replace: true})
+      })
+      .catch((error) => {
+        const errorMsg = error.message;
+        setErrorMessage("Provide correct Email and Password");
+      });
+  };
 
   return (
     <dialog id="loginModel" className="modal modal-middle sm:modal-middle">
@@ -21,7 +62,11 @@ const ModelLogin = () => {
         <h3 className="font-bold text-lg text-center">Please Login!</h3>
         <div className="modal-action flex flex-col justify-center">
           {/* Form Start */}
-          <form className="card-body" method="dialog" onSubmit={handleSubmit(onSubmit)}>
+          <form
+            className="card-body"
+            method="dialog"
+            onSubmit={handleSubmit(onSubmit)}
+          >
             <div className="form-control">
               <label className="label">
                 <span className="label-text">Email</span>
@@ -30,9 +75,11 @@ const ModelLogin = () => {
                 type="email"
                 placeholder="email"
                 className="input input-bordered"
-                {...register("email")}
-                required
+                {...register("email", { required: "Email is required" })}
               />
+              {errors.email && (
+                <p className="text-red-500">{errors.email.message}</p>
+              )}
             </div>
             <div className="form-control">
               <label className="label">
@@ -42,31 +89,37 @@ const ModelLogin = () => {
                 type="password"
                 placeholder="password"
                 className="input input-bordered"
-                {...register("password")}
-                required
+                {...register("password", { required: "Password is required" })}
               />
+              {errors.password && (
+                <p className="text-red-500">{errors.password.message}</p>
+              )}
               <label className="label">
                 <a href="#" className="label-text-alt link link-hover">
                   Forgot password?
                 </a>
               </label>
             </div>
-            <div className="form-control mt-6">
-              {/* Error msg */}
 
-              {/* login btn */}
+            {/* error message */}
+            {
+                errorMessage? <p className=" text-red-500 text-sm italic ">{errorMessage}</p>: ""
+            }
+
+
+            <div className="form-control mt-6">
+              {/* Login button */}
               <input
                 type="submit"
                 value="Login"
                 className="btn bg-darkGrey text-white hover:bg-grey"
               />
             </div>
-
-            {/* Warninh msg */}
+            {/* Warning msg */}
             <p className=" text-center">
               Don't have an account?{" "}
               <Link
-                className=" underline cursor-pointer text-darkGrey font-semibold "
+                className=" underline cursor-pointer text-darkGrey font-semibold"
                 to="/signup"
               >
                 Signup Now
@@ -74,9 +127,9 @@ const ModelLogin = () => {
             </p>
           </form>
 
-          {/* Social media btn */}
-          <div className=" text-center space-x-3 mb-5">
-            <button className="btn btn-square">
+          {/* Social Media Sign-in Buttons */}
+          <div className="text-center space-x-3 mb-5">
+            <button className="btn btn-square" onClick={handleLogin}>
               <FcGoogle />
             </button>
             <button className="btn btn-square">
@@ -88,12 +141,13 @@ const ModelLogin = () => {
           </div>
         </div>
 
-        {/* close button */}
-        <button 
-        htmlFor="loginModel"
-        onClick={() => document.getElementById("loginModel").close()}
-
-        className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+        {/* Close Button */}
+        <button
+          onClick={() => document.getElementById("loginModel").close()}
+          className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
+        >
+          ✕
+        </button>
       </div>
     </dialog>
   );

@@ -1,10 +1,11 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useContext, useState } from "react";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
 import { FaSquareFacebook } from "react-icons/fa6";
 import { FaApple } from "react-icons/fa6";
 import { useForm } from "react-hook-form";
 import ModelLogin from "./ModelLogin";
+import { AuthContext } from "../contexts/AuthProvider";
 const Signup = () => {
   const {
     register,
@@ -13,7 +14,32 @@ const Signup = () => {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => console.log(data);
+  const { createUser, user } = useContext(AuthContext);
+  const [errorMessage, setErrorMessage] = useState("")
+
+  const navigate = useNavigate();
+
+
+
+  // Create account
+  const onSubmit = (data) => {
+    const email = data.email;
+    const password = data.password;
+
+    createUser(email, password)
+      .then((result) => {
+        // Signed up
+        const user = result.user;
+        alert("Account Creation successful!");
+        navigate("/")
+      })
+      .catch((error) => {
+        const errorMsg = error.message;
+        setErrorMessage(errorMsg);
+      });
+  };
+
+
   return (
     <div className=" max-w-md flex items-center justify-center my-20 shadow  mx-auto rounded-xl">
       <div className=" flex justify-center items-center">
@@ -57,7 +83,12 @@ const Signup = () => {
             </label>
           </div>
           <div className="form-control mt-6">
+
             {/* Error msg */}
+            {
+                errorMessage? <p className=" text-red-500 text-sm italic mb-2 ">{errorMessage}</p>: ""
+
+            }
 
             {/* login btn */}
             <input

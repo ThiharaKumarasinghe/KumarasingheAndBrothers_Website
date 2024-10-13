@@ -1,11 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import logo from "/webLogo_2.png";
 import mobilelogo from "/webLogo.png";
 import { FaUser } from "react-icons/fa";
 import ModelLogin from "./ModelLogin";
+import { AuthContext } from "../contexts/AuthProvider";
+import Profile from "./Profile";
 
 const Navbar = () => {
   const [isSticky, setSticky] = useState(false);
+
+  //get user
+  const { user } = useContext(AuthContext);
 
   // haddle scroll function
   const handleScroll = () => {
@@ -171,15 +176,19 @@ const Navbar = () => {
           </div>
 
           {/* Button */}
-          <button
-            onClick={() => document.getElementById("loginModel").showModal()}
-            className="btn rounded-full px-6 mr-4 bg-darkGrey text-white"
-          >
-            <FaUser /> Login
-          </button>
+          {user ? (
+            <Profile user = {user}/>
+          ) : (
+            <button
+              onClick={() => document.getElementById("loginModel").showModal()}
+              className="btn rounded-full px-6 mr-4 bg-darkGrey text-white"
+            >
+              <FaUser /> Login
+            </button>
+          )}
 
           {/* Login model */}
-          <ModelLogin/>
+          <ModelLogin />
         </div>
       </div>
     </header>
