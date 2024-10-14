@@ -1,3 +1,5 @@
 start fronend:
 npm start 
 
+start backend
+nom start
