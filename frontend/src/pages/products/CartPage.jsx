@@ -42,7 +42,7 @@ const CartPage = () => {
         })
           .then((res) => res.json()) // return the parsed JSON response
           .then((data) => {
-            if (data.deletedCount > 0) {
+            if (data) {
               const updatedCartItems = cartItems.filter(
                 (cartItem) => cartItem._id !== item._id
               );
