@@ -57,7 +57,8 @@ const Card = ({ product }) => {
         })
           .then((res) => res.json())
           .then((data) => {
-            if (data.insertedId) {
+            // Check if the response contains the cart item ID (_id)
+            if (data._id) { // MongoDB usually returns _id
               Swal.fire({
                 position: "center",
                 icon: "success",
@@ -65,7 +66,27 @@ const Card = ({ product }) => {
                 showConfirmButton: false,
                 timer: 1500,
               });
+            } else {
+              // Handle case where item was not added
+              Swal.fire({
+                position: "center",
+                icon: "error",
+                title: "Failed to add product to cart",
+                showConfirmButton: false,
+                timer: 1500,
+              });
             }
+          })
+          .catch((error) => {
+            // Catch any errors during the fetch operation
+            Swal.fire({
+              position: "center",
+              icon: "error",
+              title: "Error occurred",
+              text: error.message,
+              showConfirmButton: false,
+              timer: 1500,
+            });
           });
       }
     } else {

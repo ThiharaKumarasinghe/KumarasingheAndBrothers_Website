@@ -10,34 +10,7 @@ const port = process.env.PORT || 6001;
 app.use(cors());
 app.use(express.json());
 
-// mongodb configuration using mongoose
-mongoose
-  .connect(
-    `mongodb+srv://${process.env.DB_USER}:${process.env.DB_USER_PASSWORD}@kumarasingheandbrothers.pebqk.mongodb.net/DataBase_Kumarasing?retryWrites=true&w=majority&appName=KumarasingheAndBrothers`
-  )
-  .then(
-    console.log("MongoDB connected successfully")
-  )
-  .catch((error) => console.log("Error connecting to MongoDB: " + error));
 
-// import routes here
-const productsRoutes = require("./api/routes/productRoute")
-const cartRoutes = require("./api/routes/cartRoute")
-
-// PRODUCTS----------------------------------------------------------------
-app.use('/products',productsRoutes)
-
-
-
-// CARTS---------------------------------------------------------------------
-app.use('/carts',cartRoutes)
-
-
-
-
-
-
-/*
 // Mongodb configations
 const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_USER_PASSWORD}@kumarasingheandbrothers.pebqk.mongodb.net/?retryWrites=true&w=majority&appName=KumarasingheAndBrothers`;
@@ -128,10 +101,10 @@ async function run() {
   }
 }
 run().catch(console.dir);
-*/
+
 
 app.get("/", (req, res) => {
-  res.send("Thihara Kumarasinghe");
+  res.send("Hello World!");
 });
 
 app.listen(port, () => {

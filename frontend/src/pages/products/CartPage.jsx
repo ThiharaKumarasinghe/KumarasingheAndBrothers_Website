@@ -43,7 +43,11 @@ const CartPage = () => {
           .then((res) => res.json()) // return the parsed JSON response
           .then((data) => {
             if (data.deletedCount > 0) {
-              refetch();
+              const updatedCartItems = cartItems.filter(
+                (cartItem) => cartItem._id !== item._id
+              );
+              setCartItems(updatedCartItems); // Update state immediately
+              calculateTotalPrice(updatedCartItems); // Update total price
               Swal.fire({
                 title: "Deleted!",
                 text: "Your item has been deleted.",
@@ -90,7 +94,6 @@ const CartPage = () => {
 
           setCartItems(updatedCart);
           calculateTotalPrice(updatedCart); // Recalculate the total price
-          refetch(); // Refetch data to sync with backend
         }
       })
       .catch((error) => console.error("Error updating quantity:", error));
@@ -118,7 +121,6 @@ const CartPage = () => {
 
             setCartItems(updatedCart);
             calculateTotalPrice(updatedCart); // Recalculate the total price
-            refetch(); // Refetch data to sync with backend
           }
         })
         .catch((error) => console.error("Error updating quantity:", error));
@@ -150,7 +152,7 @@ const CartPage = () => {
           </thead>
           <tbody>
             {/* rows */}
-            {cart.map((item, index) => (
+            {cartItems.map((item, index) => (
               <tr key={index}>
                 <td>{index + 1}</td>
                 <td>
@@ -218,7 +220,7 @@ const CartPage = () => {
         {/* Customer details */}
         <div className="md:w-1/2 space-y-3">
           <h3 className="font-medium">Customer Details</h3>
-          <p>Name : {user.displayName}</p>
+          <p>Name : {user.displayName || "User Name"}</p>
           <p>Email : {user.email}</p>
           <p>User_ID : {user.uid}</p>
         </div>

@@ -51,6 +51,19 @@ const Signup = () => {
           {/* Upper msg */}
           <h3 className="font-bold text-lg text-center">Please Signup Now!</h3>
 
+          {/* name */}
+          <div className="form-control">
+            <label className="label">
+              <span className="label-text">Name</span>
+            </label>
+            <input
+              type="name"
+              placeholder="Your name"
+              className="input input-bordered"
+              {...register("name")}
+            />
+          </div>
+
           {/* email*/}
           <div className="form-control">
             <label className="label">

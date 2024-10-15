@@ -1,26 +1,32 @@
 import React, { useContext } from "react";
 import { CgProfile } from "react-icons/cg";
 import { AuthContext } from "../contexts/AuthProvider";
+import { useNavigate } from "react-router-dom";
 
 const Profile = ({ user }) => {
+  const { logout } = useContext(AuthContext);
+  const navigate = useNavigate(); // Declare useNavigate hook at the top of the component
 
-    const {logout}=useContext(AuthContext)
+  const handleRefresh = () => {
+    window.location.reload();
+  };
 
-    const handleRefresh = () => {
-        window.location.reload();
-      };
+  const handleLogout = () => {
+    logout()
+      .then(() => {
+        // Sign-out successful
+        alert("Logout successful!");
 
-    const hadleLogout =()=>{
+        // Navigate to homepage after successful logout
+        navigate("/");
+        handleRefresh();
+      })
+      .catch((error) => {
+        // Handle error
+        console.error("Error logging out:", error);
+      });
+  };
 
-        logout().then(() => {
-            // Sign-out successful.
-            alert("Logout successful!")
-            handleRefresh();
-          }).catch((error) => {
-            // An error happened.
-          });
-
-    }
   return (
     <div>
       <div className="drawer drawer-end z-[60]">
@@ -56,13 +62,13 @@ const Profile = ({ user }) => {
               <a href="/update-profile">Profile</a>
             </li>
             <li>
-              <a>Order</a>
+              <a href="/order">Order</a>
             </li>
             <li>
-              <a>Settings</a>
+              <a href="/settings">Settings</a>
             </li>
             <li>
-              <a onClick={hadleLogout}>Log out</a>
+              <a onClick={handleLogout}>Log out</a>
             </li>
           </ul>
         </div>
