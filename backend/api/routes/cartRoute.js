@@ -13,7 +13,11 @@ router.post("/", cartController.addToCart);
 // delete a cart item
 router.delete("/:id", cartController.deleteCartItem);
 
+// update the cart item
 router.put("/:id", cartController.updateCart);
+
+// get single recipe
+router.get("/:id", cartController.getSingleCart);
 
 
 

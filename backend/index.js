@@ -131,7 +131,7 @@ run().catch(console.dir);
 */
 
 app.get("/", (req, res) => {
-  res.send("Thihara Kumarasinghe");
+  res.send("Thihara Kumarasinghe : Welcome to Kumarasinghe and Brothers!");
 });
 
 app.listen(port, () => {

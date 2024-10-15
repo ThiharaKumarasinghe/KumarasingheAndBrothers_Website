@@ -74,56 +74,69 @@ const CartPage = () => {
   };
 
   // Handle increase quantity
-  const handleIncrease = (item) => {
-    fetch(`http://localhost:6001/carts/${item._id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ quantity: item.quantity + 1 }), // Increment quantity by 1
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.modifiedCount > 0) {
-          const updatedCart = cartItems.map((cartItem) => {
-            if (cartItem._id === item._id) {
-              return { ...cartItem, quantity: cartItem.quantity + 1 };
-            }
-            return cartItem;
-          });
-
-          setCartItems(updatedCart);
-          calculateTotalPrice(updatedCart); // Recalculate the total price
-        }
-      })
-      .catch((error) => console.error("Error updating quantity:", error));
-  };
-
-  // Handle decrease quantity
-  const handleDecrease = (item) => {
-    if (item.quantity > 1) {
-      fetch(`http://localhost:6001/carts/${item._id}`, {
+  const handleIncrease = async (item) => {
+    try {
+      const response = await fetch(`http://localhost:6001/carts/${item._id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ quantity: item.quantity - 1 }), // Decrease quantity by 1
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          if (data.modifiedCount > 0) {
-            const updatedCart = cartItems.map((cartItem) => {
-              if (cartItem._id === item._id) {
-                return { ...cartItem, quantity: cartItem.quantity - 1 };
-              }
-              return cartItem;
-            });
+        body: JSON.stringify({ quantity: item.quantity + 1 }),
+      });
 
-            setCartItems(updatedCart);
-            calculateTotalPrice(updatedCart); // Recalculate the total price
+      if (response.ok) {
+        const updatedCart = cartItems.map((cartItem) => {
+          if (cartItem.id === item.id) {
+            return {
+              ...cartItem,
+              quantity: cartItem.quantity + 1,
+            };
           }
-        })
-        .catch((error) => console.error("Error updating quantity:", error));
+          return cartItem;
+        });
+        await refetch();
+        setCartItems(updatedCart);
+      } else {
+        console.error("Failed to update quantity");
+      }
+    } catch (error) {
+      console.error("Error updating quantity:", error);
+    }
+  };
+
+  // Handle decrease quantity
+  const handleDecrease = async (item) => {
+    if (item.quantity > 1) {
+      try {
+        const response = await fetch(
+          `http://localhost:6001/carts/${item._id}`,
+          {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ quantity: item.quantity - 1 }),
+          }
+        );
+
+        if (response.ok) {
+          const updatedCart = cartItems.map((cartItem) => {
+            if (cartItem.id === item.id) {
+              return {
+                ...cartItem,
+                quantity: cartItem.quantity - 1,
+              };
+            }
+            return cartItem;
+          });
+          await refetch();
+          setCartItems(updatedCart);
+        } else {
+          console.error("Failed to update quantity");
+        }
+      } catch (error) {
+        console.error("Error updating quantity:", error);
+      }
     }
   };
 
