@@ -7,8 +7,39 @@ import { IoMdAddCircle } from "react-icons/io";
 import { FaEdit } from "react-icons/fa";
 import { TiThMenu } from "react-icons/ti";
 import { FaUser } from "react-icons/fa";
+import { IoHome } from "react-icons/io5";
+import { RiAlignItemLeftFill } from "react-icons/ri";
+import { FaCartArrowDown } from "react-icons/fa6";
+import { RiCustomerService2Fill } from "react-icons/ri";
+
+
+
 
 import logo from "/webLogo.png";
+
+const sharedLink = (<>
+<li>
+            <Link to="/">
+              <IoHome /> Home
+            </Link>
+          </li>
+          <li>
+            <Link to="/products">
+              <RiAlignItemLeftFill
+               /> Products
+            </Link>
+          </li>
+          <li>
+            <Link to="/">
+              <FaCartArrowDown /> Orders
+            </Link>
+          </li>
+          <li>
+            <Link to="/">
+              <RiCustomerService2Fill /> Customer Support
+            </Link>
+          </li>
+</>)
 
 const DashboardLayout = () => {
   return (
@@ -77,6 +108,11 @@ const DashboardLayout = () => {
               <FaUsersCog /> All User
             </Link>
           </li>
+
+          <hr className="mb-1 mt-3" />
+          {/* Shared Link */}
+          {sharedLink}
+
         </ul>
       </div>
     </div>

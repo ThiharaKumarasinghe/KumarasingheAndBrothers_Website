@@ -23,17 +23,16 @@ mongoose
 // import routes here
 const productsRoutes = require("./api/routes/productRoute")
 const cartRoutes = require("./api/routes/cartRoute")
+const usersRoutes = require("./api/routes/userRoute")
 
-// PRODUCTS----------------------------------------------------------------
-app.use('/products',productsRoutes)
+// PRODUCTS
+app.use('/products',productsRoutes);
 
+// CARTS
+app.use('/carts',cartRoutes);
 
-
-// CARTS---------------------------------------------------------------------
-app.use('/carts',cartRoutes)
-
-
-
+// USERS
+app.use('/users',usersRoutes);
 
 
 
