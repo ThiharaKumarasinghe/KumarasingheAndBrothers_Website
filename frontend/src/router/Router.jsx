@@ -11,6 +11,7 @@ import Dashboard from "../pages/dashboard/admin/Dashboard";
 import Users from "../pages/dashboard/admin/Users";
 import AddProducts from "../pages/dashboard/admin/AddProducts";
 import ManageProduct from "../pages/dashboard/admin/ManageProduct";
+import UpdateProduct from "../pages/dashboard/admin/UpdateProduct";
 
 const router = createBrowserRouter([
   {
@@ -54,6 +55,11 @@ const router = createBrowserRouter([
       {
         path : "manage-product",
         element: <ManageProduct/>
+      },
+      {
+        path : "update-product/:id",
+        element: <UpdateProduct/>,
+        loader: ({params})=>fetch(`http://localhost:6001/products/${params.id}`)
       }
     
     ]

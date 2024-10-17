@@ -4,6 +4,7 @@ import { FaEdit } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import Swal from 'sweetalert2'
+import { Link } from "react-router-dom";
 
 
 const ManageProduct = () => {
@@ -37,10 +38,6 @@ const ManageProduct = () => {
     });
   };
 
-  // handle edit item
-  const handleEditItem=(item)=>{
-
-  };
 
   return (
     <div className="  w-full md:w-[870px] px-4 mx-auto">
@@ -82,9 +79,10 @@ const ManageProduct = () => {
                 <td>{item.name}</td>
                 <td>{item.price}</td>
                 <th>
-                  <button className="btn btn-ghost bg-blue-500 btn-xs" onClick={()=>handleEditItem(item)} >
+                    <Link to={`/dashboard/update-product/${item._id}`}><button className="btn btn-ghost bg-blue-500 btn-xs"  >
                     <FaEdit />
-                  </button>
+                  </button></Link>
+                  
                 </th>
                 <th>
                   <button className="btn btn-ghost bg-red-400 btn-xs" onClick={()=>handleDeleteItem(item)}>

@@ -46,8 +46,8 @@ const deleteProductItem = async(req, res) => {
 const singleProductItem = async (req, res) => {
     const Id = req.params.id;
     try {
-        const res = await Products.findById(Id);
-        res.status(200).json(res)
+        const item = await Products.findById(Id);
+        res.status(200).json(item)
         
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -57,10 +57,10 @@ const singleProductItem = async (req, res) => {
 // update single menu item
 const updateProductItem = async (req, res) => {
     const menuId = req.params.id;
-    const { name, image, category, price} = req.body;
+    const { name, image, category,description, price} = req.body;
     try {
         const updatedMenu = await Products.findByIdAndUpdate(menuId, 
-            { name, image, category, price}, 
+            { name, image, category, price,description}, 
             {new: true, runValidator: true}
             );
 

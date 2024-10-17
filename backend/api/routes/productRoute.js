@@ -13,5 +13,14 @@ router.post("/", productController.postProductItem);
 // delete a product
 router.delete("/:id", productController.deleteProductItem);
 
+// get single product
+router.get("/:id", productController.singleProductItem);
+
+// update single product
+router.put("/:id", productController.updateProductItem);
+
+
+
+
 
 module.exports = router;
