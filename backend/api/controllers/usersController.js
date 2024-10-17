@@ -48,21 +48,21 @@ const deleteUser = async (req, res) => {
 // get admin
 const getAdmin = async (req, res) => {
   const email = req.params.email;
-  const query = { email: email };
-
+  const query = {email: email};
   try {
-    const user = await Users.findOne(query);
-    if (email !== req.decoded.email) {
-      return res.status(401).json({ message: "Unauthorized access!" });
-    }
+      const user = await Users.findOne(query);
+      if(email !== req.decoded.email){
+          return res.status(403).send({message: "Forbidden access"})
+      }
+      let admin = false;
+      if(user ){
+          admin = user?.role === "admin";
+      }
 
-    let admin = false;
-    if (user) {
-      admin = user?.role == "admin";
-    }
-    res.status(200).json({ admin });
+      res.status(200).json({admin})
+      
   } catch (error) {
-    res.status(500).json({ message: error.message });
+      res.status(500).json({ message: error.message });
   }
 };
 

@@ -2,13 +2,21 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 const mongoose = require("mongoose");
+const jwt = require('jsonwebtoken');
+
+
+
 require("dotenv").config();
+
 
 const port = process.env.PORT || 6001;
 
 // middleware
 app.use(cors());
 app.use(express.json());
+
+//clg for testing purposes
+// console.log(process.env.ACCESS_TOKEN_SECRET)
 
 // mongodb configuration using mongoose
 mongoose
@@ -20,10 +28,27 @@ mongoose
   )
   .catch((error) => console.log("Error connecting to MongoDB: " + error));
 
+
+
+
+
+  // jwt authentication
+  app.post('/jwt', async(req, res) => {
+    const user = req.body;
+    const token = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {
+      expiresIn: '1h'
+    })
+    res.send({token});
+  })
+
+
+
+
+
 // import routes here
 const productsRoutes = require("./api/routes/productRoute")
 const cartRoutes = require("./api/routes/cartRoute")
-const usersRoutes = require("./api/routes/userRoute")
+const usersRoutes = require("./api/routes/userRoute");
 
 // PRODUCTS
 app.use('/products',productsRoutes);
@@ -129,7 +154,7 @@ async function run() {
 run().catch(console.dir);
 */
 
-app.get("/", (req, res) => {
+app.get("/",(req, res) => {
   res.send("Thihara Kumarasinghe : Welcome to Kumarasinghe and Brothers!");
 });
 

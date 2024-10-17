@@ -1,60 +1,94 @@
 import React, { useContext, useState } from "react";
-import { Link, Navigate, useLocation, useNavigation } from "react-router-dom";
+import { Link, Navigate, useLocation, useNavigate, useNavigation } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
 import { FaSquareFacebook, FaApple } from "react-icons/fa6";
 import { useForm } from "react-hook-form";
 import { AuthContext } from "../contexts/AuthProvider";
+import axios from "axios";
 
 const ModelLogin = () => {
-  const {
+   //react hook form
+   const {
     register,
-    handleSubmit,
+    handleSubmit, reset,
     formState: { errors },
   } = useForm();
 
   // useContext
-  const { signupWithGmail, user, loginWithEmailAndPaswword } = useContext(AuthContext);
+  const { signupWithGmail, user, loginWithEmailAndPaswword } =
+    useContext(AuthContext);
 
-  const [errorMessage, setErrorMessage] = useState("")
+  const [errorMessage, setErrorMessage] = useState("");
 
   // to redirection to home page
+  const navigate = useNavigate();
   const location = useLocation();
-  const navigation = useNavigation();
-  const from = location.state?.from?.pathname || "/";
 
+  const from = location.state?.from?.pathname || "/";
 
   // Handle Google Sign-In
   const handleLogin = () => {
     signupWithGmail()
       .then((result) => {
-        // The signed-in user info
         const user = result.user;
-        alert("Login successful!");
-        document.getElementById("loginModel").close()
-        navigation(from, {replace: true})
+        const userInfor = {
+          name: result?.user?.displayName,
+          email: result?.user?.email,
+        };
+        axios
+          .post("http://localhost:6001/users", userInfor)
+          .then((response) => {
+            // console.log(response);
+            alert("Signin successful!");
+            navigate("/");
+          });
       })
-      .catch((error) => {
-        console.log(error.message);
-      });
+      .catch((error) => console.log(error));
+
   };
 
   const onSubmit = (data) => {
     const email = data.email;
     const password = data.password;
-
+  
+    // Sign in the user
     loginWithEmailAndPaswword(email, password)
       .then((result) => {
-        // Signed up
         const user = result.user;
-        alert("Login successful!");
-        document.getElementById("loginModel").close()
-        navigation(from, {replace: true})
+        const userInfor = {
+          name: data.name,
+          email: data.email,
+        };
+  
+        // Check if the user already exists in the backend
+        axios
+          .post("http://localhost:6001/users", userInfor)
+          .then((response) => {
+            // console.log("User created:", response.data);
+            alert("Sign in successful!");
+            navigate("/");
+          })
+          .catch((error) => {
+            if (error.response && error.response.status === 409) {
+              // User already exists, proceed to login success
+              // console.log("User already exists, skipping creation.");
+              alert("Sign in successful!");
+              navigate("/");
+            } else {
+              console.error("An error occurred:", error);
+            }
+          });
+  
       })
       .catch((error) => {
-        const errorMsg = error.message;
-        setErrorMessage("Provide correct Email and Password");
+        const errorMessage = error.message;
+        setErrorMessage("Please provide valid email & password!");
       });
+    
+    reset();
   };
+  
+
 
   return (
     <dialog id="loginModel" className="modal modal-middle sm:modal-middle">
@@ -102,10 +136,11 @@ const ModelLogin = () => {
             </div>
 
             {/* error message */}
-            {
-                errorMessage? <p className=" text-red-500 text-sm italic ">{errorMessage}</p>: ""
-            }
-
+            {errorMessage ? (
+              <p className=" text-red-500 text-sm italic ">{errorMessage}</p>
+            ) : (
+              ""
+            )}
 
             <div className="form-control mt-6">
               {/* Login button */}

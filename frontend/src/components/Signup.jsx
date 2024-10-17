@@ -1,11 +1,17 @@
 import React, { useContext, useState } from "react";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
 import { FaSquareFacebook } from "react-icons/fa6";
 import { FaApple } from "react-icons/fa6";
 import { useForm } from "react-hook-form";
 import ModelLogin from "./ModelLogin";
 import { AuthContext } from "../contexts/AuthProvider";
+import axios from "axios";
+import { FaFacebookF, FaGithub, FaGoogle } from "react-icons/fa";
+import useAxiosPublic from "../hooks/useAxiosPublic";
+
+
+
 const Signup = () => {
   const {
     register,
@@ -14,31 +20,64 @@ const Signup = () => {
     formState: { errors },
   } = useForm();
 
-  const { createUser, user } = useContext(AuthContext);
-  const [errorMessage, setErrorMessage] = useState("")
+  const { createUser, user, updateUserProfile, signupWithGmail } = useContext(AuthContext);
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const axiosPublic = useAxiosPublic();
 
   const navigate = useNavigate();
+  const location = useLocation();
 
-
+  const from = location.state?.from?.pathname || "/";
 
   // Create account
   const onSubmit = (data) => {
     const email = data.email;
     const password = data.password;
-
+    // console.log(email, password)
     createUser(email, password)
       .then((result) => {
         // Signed up
         const user = result.user;
-        alert("Account Creation successful!");
-        navigate("/")
+        updateUserProfile(data.email, data.photoURL).then(() => {
+          const userInfor = {
+            name: data.name,
+            email: data.email,
+          };
+          axiosPublic.post("/users", userInfor)
+            .then((response) => {
+              // console.log(response);
+              alert("Signin successful!");
+              navigate(from, { replace: true });
+            });
+        });
       })
       .catch((error) => {
-        const errorMsg = error.message;
-        setErrorMessage(errorMsg);
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        // ..
       });
   };
 
+  // login with google
+  const handleRegister = () => {
+    signupWithGmail()
+      .then((result) => {
+        const user = result.user;
+        const userInfor = {
+          name: result?.user?.displayName,
+          email: result?.user?.email,
+        };
+        axios
+            .post("http://localhost:6001/users", userInfor)
+            .then((response) => {
+              // console.log(response);
+              alert("Account Creation successful!");
+              navigate("/");
+            });
+      })
+      .catch((error) => console.log(error));
+  };
 
   return (
     <div className=" max-w-md flex items-center justify-center my-20 shadow  mx-auto rounded-xl">
@@ -63,6 +102,7 @@ const Signup = () => {
               {...register("name")}
             />
           </div>
+
 
           {/* email*/}
           <div className="form-control">
@@ -96,12 +136,14 @@ const Signup = () => {
             </label>
           </div>
           <div className="form-control mt-6">
-
             {/* Error msg */}
-            {
-                errorMessage? <p className=" text-red-500 text-sm italic mb-2 ">{errorMessage}</p>: ""
-
-            }
+            {errorMessage ? (
+              <p className=" text-red-500 text-sm italic mb-2 ">
+                {errorMessage}
+              </p>
+            ) : (
+              ""
+            )}
 
             {/* login btn */}
             <input
@@ -111,7 +153,10 @@ const Signup = () => {
             />
 
             {/* close button */}
-            <Link to="/" className="btn bg-coolGrey text-black hover:bg-grey my-2">
+            <Link
+              to="/"
+              className="btn bg-coolGrey text-black hover:bg-grey my-2"
+            >
               Close
             </Link>
           </div>
@@ -127,6 +172,23 @@ const Signup = () => {
             </button>
           </p>
         </form>
+
+        {/* <div className="text-center space-x-3">
+          <button
+            onClick={handleRegister}
+            className="btn btn-circle hover:bg-lightGrey hover:text-white"
+          >
+            <FaGoogle />
+          </button>
+          <button className="btn btn-circle hover:bg-lightGrey hover:text-white">
+            <FaFacebookF />
+          </button>
+          <button className="btn btn-circle hover:bg-lightGrey hover:text-white">
+            <FaGithub />
+          </button>
+        </div> */}
+
+
       </div>
 
       {/* Login model */}

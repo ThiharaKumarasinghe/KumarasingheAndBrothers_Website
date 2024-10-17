@@ -3,9 +3,11 @@ const router = express.Router();
 
 // import cart controller
 const cartController = require("../controllers/CartController");
+const verifyToken = require('../middleware/varifyToken');
+
 
 // get carts using email
-router.get("/", cartController.getCartUsingEmail);
+router.get("/",verifyToken, cartController.getCartUsingEmail);
 
 // add to cart button -> POST cart
 router.post("/", cartController.addToCart);

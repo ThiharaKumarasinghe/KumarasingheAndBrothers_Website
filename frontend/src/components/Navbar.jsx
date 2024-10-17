@@ -8,12 +8,13 @@ import Profile from "./Profile";
 import { Link } from "react-router-dom";
 import useCart from "../hooks/useCart";
 import { TbGardenCartOff } from "react-icons/tb";
+import useAuth from "../hooks/useAuth";
 
 const Navbar = () => {
   const [isSticky, setSticky] = useState(false);
 
   //get user
-  const { user } = useContext(AuthContext);
+  const { user,loading } = useAuth();
 
   // to fetch the cart data
   const [cart, refetch] = useCart();

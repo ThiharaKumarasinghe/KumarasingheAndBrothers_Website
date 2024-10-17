@@ -59,6 +59,13 @@ const Profile = ({ user }) => {
           <ul className="menu bg-base-200 text-base-content min-h-full w-80 p-4">
             {/* Sidebar content here */}
             <li>
+              <p className=" text-sm text-grey">{user.email}</p>
+            </li>
+            <li>
+              <p className=" text-sm text-grey">{user.name}</p>
+            </li>
+            <hr className=" mb-1"/>
+            <li>
               <a href="/update-profile">Profile</a>
             </li>
             <li>
