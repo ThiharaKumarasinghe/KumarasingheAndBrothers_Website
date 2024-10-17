@@ -8,6 +8,8 @@ const productSchema = new Schema({
   image: String,
   description: String,
   category: String,
+  createdAt:{type: Date, dafault: Date.now},
+
 });
 
 // create model

@@ -47,6 +47,9 @@ const ModelLogin = () => {
 
   };
 
+  // to close the modal
+  const closeModel = () => document.getElementById("loginModel").close()
+
   const onSubmit = (data) => {
     const email = data.email;
     const password = data.password;
@@ -66,6 +69,7 @@ const ModelLogin = () => {
           .then((response) => {
             // console.log("User created:", response.data);
             alert("Sign in successful!");
+            closeModel();
             navigate("/");
           })
           .catch((error) => {
@@ -73,6 +77,7 @@ const ModelLogin = () => {
               // User already exists, proceed to login success
               // console.log("User already exists, skipping creation.");
               alert("Sign in successful!");
+              closeModel();
               navigate("/");
             } else {
               console.error("An error occurred:", error);

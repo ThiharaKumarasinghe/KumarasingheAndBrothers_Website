@@ -107,12 +107,12 @@ const DashboardLayout = () => {
                 </Link>
               </li>
               <li>
-                <Link to="/dashboard/users">
+                <Link to="/dashboard/add-product">
                   <IoMdAddCircle /> Add Products
                 </Link>
               </li>
               <li>
-                <Link to="/dashboard">
+                <Link to="/dashboard/manage-product">
                   <FaEdit /> Manage Products
                 </Link>
               </li>
@@ -123,6 +123,8 @@ const DashboardLayout = () => {
               </li>
 
               <hr className="mb-1 mt-3" />
+
+
               {/* Shared Link */}
               {sharedLink}
             </ul>

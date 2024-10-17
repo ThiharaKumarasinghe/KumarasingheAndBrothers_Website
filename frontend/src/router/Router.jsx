@@ -9,6 +9,8 @@ import CartPage from "../pages/products/CartPage";
 import DashboardLayout from "../layout/DashboardLayout";
 import Dashboard from "../pages/dashboard/admin/Dashboard";
 import Users from "../pages/dashboard/admin/Users";
+import AddProducts from "../pages/dashboard/admin/AddProducts";
+import ManageProduct from "../pages/dashboard/admin/ManageProduct";
 
 const router = createBrowserRouter([
   {
@@ -45,6 +47,14 @@ const router = createBrowserRouter([
       { path: "users", 
         element: <Users /> 
       },
+      {
+        path : "add-product",
+        element: <AddProducts/>
+      },
+      {
+        path : "manage-product",
+        element: <ManageProduct/>
+      }
     
     ]
   }
