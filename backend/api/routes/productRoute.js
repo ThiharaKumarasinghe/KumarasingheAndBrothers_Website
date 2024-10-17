@@ -10,5 +10,8 @@ router.get("/", productController.getAllProducts);
 // post a product
 router.post("/", productController.postProductItem);
 
+// delete a product
+router.delete("/:id", productController.deleteProductItem);
+
 
 module.exports = router;
