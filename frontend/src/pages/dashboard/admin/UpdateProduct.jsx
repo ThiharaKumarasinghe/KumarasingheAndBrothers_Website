@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { useLoaderData } from 'react-router-dom'
+import { useLoaderData, useNavigate } from 'react-router-dom'
 import { useForm } from "react-hook-form";
 import useAxiosPublic from "../../../hooks/useAxiosPublic";
 import Swal from 'sweetalert2'
@@ -11,6 +11,8 @@ const UpdateProduct = () => {
     const { register, handleSubmit, reset, formState: { errors } } = useForm();
     const axiosPublic = useAxiosPublic();
     const axiosSecure = useAxiosSecure();
+
+    const navitage = useNavigate();
 
     // image hosting key
     const imageHostingKey = import.meta.env.VITE_IMAGE_HOSTING_KEY;
@@ -53,6 +55,7 @@ const UpdateProduct = () => {
                 showConfirmButton: false,
                 timer: 1500
               });
+              navitage('/dashboard/manage-product')
             }
           }
         } catch (error) {

@@ -3,6 +3,7 @@ import useCart from "../../hooks/useCart";
 import { MdDelete } from "react-icons/md";
 import Swal from "sweetalert2";
 import { AuthContext } from "../../contexts/AuthProvider";
+import { Link } from "react-router-dom";
 
 const CartPage = () => {
   const { user } = useContext(AuthContext);
@@ -243,9 +244,11 @@ const CartPage = () => {
           <h3 className="font-medium">Shopping Details</h3>
           <p>Total Items : {cartItems.length}</p>
           <p>Total Price : {totalPrice}</p> {/* Updated total price */}
-          <button className="btn bg-darkGrey text-white hover:text-darkGrey">
-            Process Checkout
-          </button>
+          <Link to="/process-checkout">
+            <button className="btn bg-darkGrey text-white hover:text-darkGrey">
+              Process Checkout
+            </button>
+          </Link>
         </div>
       </div>
     </div>

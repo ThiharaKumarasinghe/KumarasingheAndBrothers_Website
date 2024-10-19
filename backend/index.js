@@ -49,6 +49,7 @@ mongoose
 const productsRoutes = require("./api/routes/productRoute")
 const cartRoutes = require("./api/routes/cartRoute")
 const usersRoutes = require("./api/routes/userRoute");
+const orderRoutes = require("./api/routes/orderRoute");
 
 // PRODUCTS
 app.use('/products',productsRoutes);
@@ -58,6 +59,9 @@ app.use('/carts',cartRoutes);
 
 // USERS
 app.use('/users',usersRoutes);
+
+// ORDERS
+app.use('/orders',orderRoutes);
 
 
 

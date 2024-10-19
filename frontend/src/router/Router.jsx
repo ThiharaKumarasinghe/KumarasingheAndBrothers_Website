@@ -12,6 +12,9 @@ import Users from "../pages/dashboard/admin/Users";
 import AddProducts from "../pages/dashboard/admin/AddProducts";
 import ManageProduct from "../pages/dashboard/admin/ManageProduct";
 import UpdateProduct from "../pages/dashboard/admin/UpdateProduct";
+import ProcessCheckout from "../pages/products/ProcessCheckout";
+import ManageOrder from "../pages/dashboard/admin/ManageOrder";
+import Orders from "../pages/dashboard/admin/Orders";
 
 const router = createBrowserRouter([
   {
@@ -31,6 +34,14 @@ const router = createBrowserRouter([
       { path: "/cart-page", 
         element: <CartPage /> 
       },
+      {
+        path:"/process-checkout",
+        element:<ProcessCheckout/>
+      },
+      {
+        path:"/orders",
+        element:<Orders/>
+      }
       
     ],
   },
@@ -38,6 +49,7 @@ const router = createBrowserRouter([
     path: "/signup", 
     element: <Signup /> 
   },
+  //admin routers
   {
     path: "/dashboard", 
     element: <PrivateRouter><DashboardLayout /></PrivateRouter>,
@@ -60,6 +72,10 @@ const router = createBrowserRouter([
         path : "update-product/:id",
         element: <UpdateProduct/>,
         loader: ({params})=>fetch(`http://localhost:6001/products/${params.id}`)
+      },
+      {
+        path : "manage-order",
+        element: <ManageOrder/>,
       }
     
     ]
