@@ -91,10 +91,30 @@ const getSingleCart = async (req, res) => {
   }
 };
 
+// Delete all cart items by email
+const clearCartByEmail = async (req, res) => {
+    try {
+      const email = req.query.email;
+      if (!email) {
+        return res.status(400).json({ message: "Email is required" });
+      }
+  
+      // Remove all cart items for the given email
+      await Carts.deleteMany({ email: email });
+      
+      res.status(200).json({ message: "Cart cleared successfully" });
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  };
+
+  
+
 module.exports = {
   getCartUsingEmail,
   addToCart,
   deleteCartItem,
   updateCart,
   getSingleCart,
+  clearCartByEmail,
 };

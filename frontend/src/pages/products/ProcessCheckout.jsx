@@ -29,14 +29,33 @@ const ProcessCheckout = () => {
 
       try {
         const response = await axios.post("http://localhost:6001/orders", orderItems);
+
+        
         if (response.status === 201) {
-          Swal.fire({
-            position: "center",
-            icon: "success",
-            title: "Order processed and added to the database successfully!",
-            showConfirmButton: false,
-            timer: 1500,
-          });
+        //   Swal.fire({
+        //     position: "center",
+        //     icon: "success",
+        //     title: "Order processed and added to the database successfully!",
+        //     showConfirmButton: false,
+        //     timer: 1500,
+        //   });
+          const clearCart = await axios.delete(` http://localhost:6001/carts?email=${user.email}`)
+
+          if (clearCart.status === 200) {
+            Swal.fire({
+              position: "center",
+              icon: "success",
+              title: "Order processed and added to the database successfully!",
+              showConfirmButton: false,
+              timer: 1500,
+            });
+            navigate("/", { state: { from: location } });
+
+    
+            
+          }
+
+
         }
       } catch (error) {
         const errorMessage =

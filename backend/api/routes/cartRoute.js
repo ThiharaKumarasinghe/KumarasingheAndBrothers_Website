@@ -21,6 +21,9 @@ router.put("/:id", cartController.updateCart);
 // get single recipe
 router.get("/:id", cartController.getSingleCart);
 
+// clear cart
+router.delete("/", cartController.clearCartByEmail);
+
 
 
 
