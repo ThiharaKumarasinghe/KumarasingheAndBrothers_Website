@@ -43,8 +43,6 @@ const ProcessCheckout = () => {
               timer: 1500,
             });
             navigate("/", { state: { from: location } });
-
-    
             
           }
 
