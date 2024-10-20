@@ -20,7 +20,7 @@ const AddProducts = () => {
   // image hosting key
   const imageHostingKey = import.meta.env.VITE_IMAGE_HOSTING_KEY;
 
-  const imageHosting_API = `https://api.imgbb.com/1/upload?expiration=600&key=${imageHostingKey}`
+  const imageHosting_API = `https://api.imgbb.com/1/upload?key=${imageHostingKey}`
 
 
   const onSubmit = async (data) => {
