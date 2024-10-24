@@ -7,7 +7,7 @@ const useOrder = () => {
     // console.log(user.email)
     const token = localStorage.getItem('access-token')
 
-    const { refetch, data: order = [] } = useQuery({
+    const { refetch, data: orders = [] } = useQuery({
         queryKey: ['orders', user?.email],
         queryFn: async () => {
             const res = await fetch(`http://localhost:6001/orders?email=${user?.email}`, {
@@ -19,7 +19,7 @@ const useOrder = () => {
         },
     })
 
-    return [order, refetch]
+    return [orders, refetch]
 }
 
 export default useOrder;

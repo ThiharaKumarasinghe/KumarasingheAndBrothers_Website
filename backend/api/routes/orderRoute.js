@@ -18,6 +18,9 @@ router.get("/all", orderController.getAllOrders);
 // delete order
 router.delete("/:id", orderController.deleteOrder);
 
+// POST order RSA
+router.post("/rsa", orderController.postOrderRSA);
+
 
 
 

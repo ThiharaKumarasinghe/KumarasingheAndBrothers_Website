@@ -15,7 +15,8 @@ const orderSchema = new Schema({
   totalPrice: { type: Number, required: true },
   email: { type: String, required: true, trim: true },
   cart: [cartItemSchema], // Array of cart items
-  name: { type: String, trim: true }
+  name: { type: String, trim: true },
+  createdAt:{type: Date, default: Date.now},
 });
 
 // Create the Orders model

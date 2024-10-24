@@ -15,6 +15,7 @@ import UpdateProduct from "../pages/dashboard/admin/UpdateProduct";
 import ProcessCheckout from "../pages/products/ProcessCheckout";
 import ManageOrder from "../pages/dashboard/admin/ManageOrder";
 import Orders from "../pages/dashboard/admin/Orders";
+import RSA from "../pages/products/RSA";
 
 const router = createBrowserRouter([
   {
@@ -41,6 +42,10 @@ const router = createBrowserRouter([
       {
         path:"/orders",
         element:<Orders/>
+      },
+      {
+        path:"/rsa",
+        element:<RSA/>
       }
       
     ],

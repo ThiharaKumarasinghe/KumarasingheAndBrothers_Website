@@ -2,6 +2,7 @@ import React from "react";
 import bannerImage from "/homePage/bannerImage.png";
 import item1 from "/homePage/item1.png";
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 
 const Banner = () => {
   return (
@@ -31,8 +32,8 @@ const Banner = () => {
           <motion.button
             className="text-white bg-darkGrey font-bold py-3 px-8 items-center justify-center rounded-full mt-8 hover:scale-105 transition-all"
             whileHover={{ scale: 1.1 }}
-          >
-            Order Now
+          ><Link to='/products'>Order Now</Link>
+            
           </motion.button>
         </motion.div>
 

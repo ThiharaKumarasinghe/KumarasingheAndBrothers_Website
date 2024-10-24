@@ -4,6 +4,9 @@ import Swal from "sweetalert2";
 import useAuth from "../../hooks/useAuth";
 import useCart from "../../hooks/useCart";
 import { useLocation, useNavigate } from "react-router-dom";
+import CryptoJS from "crypto-js";
+import JSEncrypt from 'jsencrypt';
+
 
 const ProcessCheckout = () => {
   const { user } = useAuth();
@@ -12,13 +15,18 @@ const ProcessCheckout = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
+
+
+
+  //AES encryption
+
   const handleCheckout = async (cartItems, user) => {
     // Calculate total price
     const totalPrice = cartItems.reduce(
       (total, item) => total + item.price * item.quantity,
       0
     );
-
+  
     if (user && user.email) {
       const orderItems = {
         name: user.displayName || "Anonymous User",
@@ -26,14 +34,27 @@ const ProcessCheckout = () => {
         email: user.email,
         cart: cartItems,
       };
-
+  
+      // Encrypt the orderItems using a secret key
+    //   const token = localStorage.getItem('access-token')
+      const secretKey = import.meta.env.VITE_AES_SECRET_KEY; 
+      console.log(secretKey)
+      const encryptedOrderItems = CryptoJS.AES.encrypt(
+        JSON.stringify(orderItems),
+        secretKey
+      ).toString();
+  
       try {
-        const response = await axios.post("http://localhost:6001/orders", orderItems);
-
-        
+        // Send encrypted orderItems to the backend
+        const response = await axios.post("http://localhost:6001/orders", {
+          encryptedData: encryptedOrderItems,
+        });
+  
         if (response.status === 201) {
-          const clearCart = await axios.delete(` http://localhost:6001/carts?email=${user.email}`)
-
+          const clearCart = await axios.delete(
+            ` http://localhost:6001/carts?email=${user.email}`
+          );
+  
           if (clearCart.status === 200) {
             Swal.fire({
               position: "center",
@@ -43,10 +64,7 @@ const ProcessCheckout = () => {
               timer: 1500,
             });
             navigate("/", { state: { from: location } });
-            
           }
-
-
         }
       } catch (error) {
         const errorMessage =
@@ -76,6 +94,75 @@ const ProcessCheckout = () => {
       });
     }
   };
+
+  // without encryption
+
+//   const handleCheckout = async (cartItems, user) => {
+//     // Calculate total price
+//     const totalPrice = cartItems.reduce(
+//       (total, item) => total + item.price * item.quantity,
+//       0
+//     );
+
+//     if (user && user.email) {
+//       const orderItems = {
+//         name: user.displayName || "Anonymous User",
+//         totalPrice: totalPrice,
+//         email: user.email,
+//         cart: cartItems,
+//       };
+
+//       try {
+//         const response = await axios.post("http://localhost:6001/orders", orderItems);
+
+        
+//         if (response.status === 201) {
+//           const clearCart = await axios.delete(` http://localhost:6001/carts?email=${user.email}`)
+
+//           if (clearCart.status === 200) {
+//             Swal.fire({
+//               position: "center",
+//               icon: "success",
+//               title: "Order processed and added to the database successfully!",
+//               showConfirmButton: false,
+//               timer: 1500,
+//             });
+//             navigate("/", { state: { from: location } });
+
+    
+            
+//           }
+
+
+//         }
+//       } catch (error) {
+//         const errorMessage =
+//           error.response && error.response.data.message
+//             ? error.response.data.message
+//             : "Error adding to Order!";
+//         Swal.fire({
+//           position: "center",
+//           icon: "warning",
+//           title: `${errorMessage}`,
+//           showConfirmButton: false,
+//           timer: 1500,
+//         });
+//       }
+//     } else {
+//       Swal.fire({
+//         title: "Please login",
+//         icon: "warning",
+//         showCancelButton: true,
+//         confirmButtonColor: "#3085d6",
+//         cancelButtonColor: "#d33",
+//         confirmButtonText: "Login now!",
+//       }).then((result) => {
+//         if (result.isConfirmed) {
+//           navigate("/signup", { state: { from: location } });
+//         }
+//       });
+//     }
+//   };
 
   return (
     <div className="section-container mt-20">

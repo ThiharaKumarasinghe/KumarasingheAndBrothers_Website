@@ -7,8 +7,10 @@ import useAxiosSecure from '../../../hooks/useAxiosSecure';
 
 const Orders = () => {
   const { user } = useContext(AuthContext);
-  const [orders, refetch] = useOrder(); // Renamed to 'orders' for clarity
+  const [orders, refetch] = useOrder(); 
   const axiosSecure = useAxiosSecure();
+
+  console.log(orders)
 
 
   const deleteOrder = async (order) => {
