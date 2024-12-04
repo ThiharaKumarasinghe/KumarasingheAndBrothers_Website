@@ -4,3 +4,10 @@ npm start
 start backend
 nom start
 
+admin:
+admin@admin.com
+admin123
+
+user:
+user@user.com
+user123
